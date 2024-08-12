@@ -167,7 +167,7 @@ export type Participant = {
 }
 
 enum BankActionStatus {
-  보류 중 = '보류 중',
+  '보류 중' = '보류 중',
   성공 = '성공',
   실패한 = '실패한',
 }

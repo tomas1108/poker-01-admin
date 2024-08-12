@@ -1,5 +1,5 @@
 import { TableColumn } from '@/app/(dashboard)/tables/_components/columns'
-import { UserColumn } from '@/app/(dashboard)/users/list/_components/columns'
+import { UserColumn } from '@/app/(dashboard)/users/_components/columns'
 import { create } from 'zustand'
 
 export type ModalType =

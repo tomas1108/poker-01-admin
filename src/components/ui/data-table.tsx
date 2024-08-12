@@ -19,6 +19,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   useReactTable,
+  FilterFn,
 } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'
 
@@ -34,31 +35,28 @@ export function DataTable<TData, TValue>({
   searchKey,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
-  const [{ pageIndex, pageSize }, setPagination] = useState<PaginationState>({
+  const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   })
 
-  const pagination = useMemo(
-    () => ({
-      pageIndex,
-      pageSize,
-    }),
-    [pageIndex, pageSize]
-  )
+  // Create the table instance
   const table = useReactTable({
     data,
     columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    onColumnFiltersChange: setColumnFilters,
-    getFilteredRowModel: getFilteredRowModel(),
     state: {
       columnFilters,
       pagination,
     },
+    onColumnFiltersChange: setColumnFilters,
     onPaginationChange: setPagination,
-    pageCount: Math.ceil(data.length / pageSize),
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    filterFns: {
+      // Define default filter functions or use the existing ones
+      // You can add custom filter functions here if needed
+    } as Record<string, FilterFn<TData>>, // Ensure the type is provided
   })
 
   return (
@@ -66,11 +64,12 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center py-4">
         <Input
           placeholder="찾다"
-          value={(table.getColumn(searchKey)?.getFilterValue() as string) ?? ''}
-          onChange={event =>
-            table.getColumn(searchKey)?.setFilterValue(event.target.value)
-          }
           className="max-w-sm"
+          value={searchKey}
+          onChange={(e) => {
+            const searchTerm = e.target.value
+            table.setGlobalFilter(searchTerm)
+          }}
         />
       </div>
       <div className="rounded-md border">
@@ -78,27 +77,25 @@ export function DataTable<TData, TValue>({
           <TableHeader>
             {table.getHeaderGroups().map(headerGroup => (
               <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map(header => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
+                {headerGroup.headers.map(header => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
               </TableRow>
             ))}
           </TableHeader>
           <TableBody>
-            {table.getRowModel().rows?.length ? (
+            {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map(row => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() ? 'selected' : undefined}
                 >
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id}>
