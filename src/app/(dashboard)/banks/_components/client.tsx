@@ -26,7 +26,7 @@ export const BanksClient: React.FC<BanksClientProps> = ({ data }) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session ])
 
   return (
     <>

@@ -20,7 +20,7 @@ const SettingsPage = () => {
 
   useEffect(() => {
     fetchSettings()
-  }, [])
+  }, [  ])
 
   const fetchSettings = async () => {
     try {

@@ -27,7 +27,7 @@ export const RechargesClient: React.FC<RechargesClientProps> = ({ data }) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [  accessToken, session ])
 
   return (
     <>

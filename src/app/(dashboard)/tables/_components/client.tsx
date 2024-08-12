@@ -25,7 +25,7 @@ export const TablesClient: React.FC<TablesClientProps> = ({ data }) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session ])
 
   return (
     <>

@@ -26,7 +26,7 @@ export const WithdrawsClient: React.FC<WithdrawsClientProps> = ({ data }) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session ])
 
   return (
     <>

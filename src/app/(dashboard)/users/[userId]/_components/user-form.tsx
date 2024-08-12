@@ -78,7 +78,7 @@ export const UserForm = ({ initialData }: UserFormProps) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session])
 
   const onSubmit = async (values: z.infer<typeof UserSchema>) => {
     try {

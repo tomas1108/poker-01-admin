@@ -26,7 +26,7 @@ export const RoomsClient: React.FC<RoomsClientProps> = ({ data }) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [  accessToken, session ])
 
   return (
     <>

@@ -89,7 +89,7 @@ const DashboardPage  = () => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session ])
 
   return (
    <> 

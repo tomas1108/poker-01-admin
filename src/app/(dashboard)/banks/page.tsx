@@ -8,19 +8,19 @@ import { BankColumn } from './_components/columns'
 const BanksPage = async () => {
   const { response: banks } = await bankApi.getBanks()
 
-  // const formattedBanks: BankColumn[] = banks.map((item: Bank) => ({
-  //   id: item.id,
-  //   username: item.user?.username,
-  //   cardNumber: item.cardNumber,
-  //   cardHolderName: item.cardHolderName,
-  //   securityCode: item.securityCode,
-  //   expiryDate: format(item.expiryDate, 'MMMM do, yyyy'),
-  // }))
+  const formattedBanks: BankColumn[] = banks.map((item: Bank) => ({
+    id: item.id,
+    username: item.user?.username,
+    cardNumber: item.cardNumber,
+    cardHolderName: item.cardHolderName,
+    securityCode: item.securityCode,
+    expiryDate: format(item.expiryDate, 'MMMM do, yyyy'),
+  }))
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        {/* <BanksClient data={formattedBanks} /> */}
+        <BanksClient data={formattedBanks} />
       </div>
     </div>
   )

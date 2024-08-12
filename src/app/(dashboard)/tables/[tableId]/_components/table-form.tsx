@@ -66,7 +66,7 @@ export const TableForm = ({ initialData }: TableFormProps) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session])
 
   const onSubmit = async (values: z.infer<typeof TableSchema>) => {
     try {

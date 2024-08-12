@@ -25,7 +25,7 @@ export const HistoryClient: React.FC<HistoryClientProps> = ({ data }) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session ])
 
   return (
     <>

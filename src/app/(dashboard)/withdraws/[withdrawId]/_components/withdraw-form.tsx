@@ -66,7 +66,7 @@ export const WithdrawForm = ({ initialData }: WithdrawFormProps) => {
     if (!accessToken) {
       saveStorageToken(session?.user.token as string)
     }
-  }, [])
+  }, [ accessToken, session])
 
   useEffect(() => {
     if (initialData) {
